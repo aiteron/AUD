@@ -1,4 +1,4 @@
-if AUD == nil then AUD = {} end
+require("AUDInit")
 
 AUD.textureButtonOn = getTexture("media/textures/AUD_mainMenuButton_On.png")
 AUD.textureButtonOff = getTexture("media/textures/AUD_mainMenuButton_Off.png")
@@ -35,6 +35,10 @@ function AUD.loadMainWindowTabs()
     AUD.mainTab = AUDMainTab:new(0, 48, AUD.mainWindow:getWidth(), AUD.mainWindow:getHeight() - AUD.mainWindow.nested.tabHeight)
     AUD.mainTab:initialise()
     AUD.mainWindow.nested:addView("Main", AUD.mainTab)
+
+    AUD.vehicleTab = AUDVehicleTab:new(0, 48, AUD.mainWindow:getWidth(), AUD.mainWindow:getHeight() - AUD.mainWindow.nested.tabHeight)
+    AUD.vehicleTab:initialise()
+    AUD.mainWindow.nested:addView("Vehicle", AUD.vehicleTab)
 end
 
 
