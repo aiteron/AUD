@@ -3,12 +3,8 @@ if AUD == nil then AUD = {} end
 AUD.textureButtonOn = getTexture("media/textures/AUD_mainMenuButton_On.png")
 AUD.textureButtonOff = getTexture("media/textures/AUD_mainMenuButton_Off.png")
 
-function AUD.hideWindow(self)
-	ISCollapsableWindow.close(self);
-	AUD.toolbarButton:setImage(AUD.textureButtonOff);
-end
 
-function AUD.showMainWindow(playerNum)
+function AUD.showMainWindow()
     AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 680, Core:getInstance():getScreenHeight() - 285, 640, 248);
     AUD.mainWindowTabPanel:initialise();
     AUD.mainWindowTabPanel:setAnchorBottom(true);
@@ -17,12 +13,28 @@ function AUD.showMainWindow(playerNum)
     AUD.mainWindowTabPanel:setEqualTabWidth(true)
     AUD.mainWindowTabPanel:setCenterTabs(true)
     AUD.mainWindow = AUD.mainWindowTabPanel:wrapInCollapsableWindow("Aiteron Userfriendly Debug");
-    AUD.mainWindow.close = AUD.hideWindow;
-    AUD.mainWindow.closeButton.onmousedown = AUD.hideWindow;
+    
+    local closeFunc = function(obj)
+        ISCollapsableWindow.close(obj);
+        AUD.toolbarButton:setImage(AUD.textureButtonOff);
+    end
+    
+    AUD.mainWindow.close = closeFunc
+    AUD.mainWindow.closeButton.onmousedown = closeFunc
     AUD.mainWindow:setResizable(true);
+
+    AUD.loadMainWindowTabs()
 
     AUD.mainWindow:addToUIManager();
     AUD.toolbarButton:setImage(AUD.textureButtonOn);
+end
+
+
+
+function AUD.loadMainWindowTabs()
+    AUD.mainTab = AUDMainTab:new(0, 48, AUD.mainWindow:getWidth(), AUD.mainWindow:getHeight() - AUD.mainWindow.nested.tabHeight)
+    AUD.mainTab:initialise()
+    AUD.mainWindow.nested:addView("Main", AUD.mainTab)
 end
 
 
@@ -30,7 +42,7 @@ function AUD.showMainWindowToggle()
     if AUD.mainWindow and AUD.mainWindow:getIsVisible() then
 		AUD.mainWindow:close();
 	else
-		AUD.showMainWindow(getPlayer():getPlayerNum());
+		AUD.showMainWindow();
 	end
 end
 
@@ -38,7 +50,7 @@ function AUD.mainWindowButton()
     if AUD.toolBarButton then return end
 
     local movableBtn = ISEquippedItem.instance.movableBtn;
-	AUD.toolbarButton = ISButton:new(-5, movableBtn:getY() + movableBtn:getHeight() + 110, 64, 64, "", nil, AUD.showMainWindowToggle);
+	AUD.toolbarButton = ISButton:new(-9, movableBtn:getY() + movableBtn:getHeight() + 110, 64, 64, "", nil, AUD.showMainWindowToggle);
 	AUD.toolbarButton:setImage(AUD.textureButtonOff)
 	AUD.toolbarButton:setDisplayBackground(false);
 	AUD.toolbarButton.borderColor = {r=1, g=1, b=1, a=0.1};
