@@ -24,14 +24,14 @@ function AUDInspector:initialise()
     AUD.inspectorWindow.closeButton.onmousedown = closeFunc
     AUD.inspectorWindow:setResizable(true);
 
-    AUD.inspectorWindow:addToUIManager();
-
-    for tabName, values in pairs(AUD.Inspector.TabsData) do
-        AUD.Inspector.Tabs[tabName] = AUDInspectorTab:new(0, 48, AUD.inspectorWindow:getWidth(), AUD.inspectorWindow:getHeight() - AUD.inspectorWindow.nested.tabHeight)
-        AUD.Inspector.Tabs[tabName]:initialise()
-        AUD.Inspector.Tabs[tabName].values = AUD.Inspector.TabsData[tabName]
-        AUD.inspectorWindow.nested:addView(tabName, AUD.Inspector.Tabs[tabName])
+    for name, _ in pairs(AUD.Inspector.TabsData) do
+        AUD.ff = AUDInspectorTab:new(0, 48, AUD.inspectorWindow:getWidth(), AUD.inspectorWindow:getHeight() - AUD.inspectorWindow.nested.tabHeight)
+        AUD.ff:initialise()
+        AUDInspectorTab.values = AUD.Inspector.TabsData[name]
+        AUD.inspectorWindow.nested:addView(name, AUD.ff)
     end
+
+    AUD.inspectorWindow:addToUIManager();
 end
 
 
@@ -40,13 +40,6 @@ end
 function AUD.insp(tabName, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
     if AUD.Inspector.TabsData[tabName] == nil then
         AUD.Inspector.TabsData[tabName] = {}
-        
-        if AUD.inspectorWindow ~= nil then 
-            AUD.Inspector.Tabs[tabName] = AUDInspectorTab:new(0, 48, AUD.inspectorWindow:getWidth(), AUD.inspectorWindow:getHeight() - AUD.inspectorWindow.nested.tabHeight)
-            AUD.Inspector.Tabs[tabName]:initialise()
-            AUD.Inspector.Tabs[tabName].values = AUD.Inspector.TabsData[tabName]
-            AUD.inspectorWindow.nested:addView(tabName, AUD.Inspector.Tabs[tabName])
-        end
     end
 
     local t = {}
@@ -74,6 +67,6 @@ function AUD.insp(tabName, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
         end
     end
 
-    table.insert(AUD.Inspector.TabsData[tabName], t)
+    AUD.Inspector.TabsData[tabName][t[1]] = t
 end
 
