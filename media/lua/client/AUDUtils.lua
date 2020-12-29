@@ -6,6 +6,10 @@ AUD.Utils.isHighlightSquareOn = false
 AUD.Utils.isSelectVehicle = false
 AUD.Utils.selectedVehicle = nil
 
+AUD.Utils.isSpawnVehicle = false
+AUD.Utils.spawnVehicleScript = nil
+
+
 function AUD.Utils.highlightSquare()
     if AUD.Utils.isHighlightSquareOn then 
         local z = getPlayer():getZ()
@@ -28,11 +32,15 @@ Events.OnMouseMove.Add(AUD.Utils.highlightSquare)
 
 
 function AUD.Utils.onClick()    
-    if AUD.Utils.isSelectVehicle then
-        local z = getPlayer():getZ()
-        local x, y = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), z)
-        
-		local sq = getCell():getGridSquare(math.floor(x), math.floor(y), z)
+    local z = getPlayer():getZ()
+    local x, y = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), z)
+    local sq = getCell():getGridSquare(math.floor(x), math.floor(y), z)
+
+    if AUD.Utils.isSpawnVehicle then
+        if sq then
+            addVehicleDebug(AUD.Utils.spawnVehicleScript:getFullName(), IsoDirections.S, nil, sq)
+        end
+    elseif AUD.Utils.isSelectVehicle then
         local vehicle = sq:getVehicleContainer()
         if vehicle ~= nil then
             AUD.Utils.selectedVehicle = vehicle
