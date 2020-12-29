@@ -1,6 +1,6 @@
-require("AUDInit")
-require("AUDButtons")
-require("Inspector/AUDInspector")
+require("AUD/Init")
+require("AUD/Buttons")
+require("AUD/Inspector/Inspector")
 
 AUDInspectorTab = ISPanelJoypad:derive("AUDInspectorTab")
 
@@ -93,3 +93,5 @@ function AUDInspectorTab:render()
         end
     end
 end
+
+

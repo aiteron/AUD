@@ -1,4 +1,4 @@
-require("Inspector/AUDInspector.lua")
+require("AUD/Inspector/Inspector.lua")
 
 
 local function showPlayerStats()

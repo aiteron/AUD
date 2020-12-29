@@ -1,5 +1,5 @@
-require("AUDInit")
-require("AUDButtons")
+require("AUD/Init")
+require("AUD/Buttons")
 AUD.Inspector = {}
 AUD.Inspector.Tabs = {}
 AUD.Inspector.TabsData = {}
