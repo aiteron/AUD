@@ -11,14 +11,14 @@ local activeViews = {
 
 
 function AUD.showMainWindow()
-    AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 680, Core:getInstance():getScreenHeight() - 285, 640, 248);
+    AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 220, Core:getInstance():getScreenHeight() - 290, 170, 248);
     AUD.mainWindowTabPanel:initialise();
     AUD.mainWindowTabPanel:setAnchorBottom(true);
     AUD.mainWindowTabPanel:setAnchorRight(true);
     AUD.mainWindowTabPanel.target = self;
     AUD.mainWindowTabPanel:setEqualTabWidth(true)
     AUD.mainWindowTabPanel:setCenterTabs(true)
-    AUD.mainWindow = AUD.mainWindowTabPanel:wrapInCollapsableWindow("Aiteron Userfriendly Debug");
+    AUD.mainWindow = AUD.mainWindowTabPanel:wrapInCollapsableWindow("AUD");
     
     local closeFunc = function(obj)
         activeView = AUD.mainWindowTabPanel:getActiveViewIndex()
@@ -62,7 +62,7 @@ function AUD.mainWindowButton()
     if AUD.toolBarButton then return end
 
     local movableBtn = ISEquippedItem.instance.movableBtn;
-	AUD.toolbarButton = ISButton:new(-9, movableBtn:getY() + movableBtn:getHeight() + 110, 64, 64, "", nil, AUD.showMainWindowToggle);
+	AUD.toolbarButton = ISButton:new(-9, movableBtn:getY() + movableBtn:getHeight() + 70, 64, 64, "", nil, AUD.showMainWindowToggle);
 	AUD.toolbarButton:setImage(AUD.textureButtonOff)
 	AUD.toolbarButton:setDisplayBackground(false);
 	AUD.toolbarButton.borderColor = {r=1, g=1, b=1, a=0.1};

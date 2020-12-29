@@ -19,7 +19,7 @@ local function showPlayerStats()
     end
 
     AUD.insp("Player", "Vehicle:", vehName)
-    AUD.insp("Player", "Vehicle position:", x, y)
+    AUD.insp("Player", "Vehicle position:", x, y, 4534, 3333, 2222)
 end
 
 

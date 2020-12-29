@@ -88,9 +88,58 @@ function AUD.Buttons.addInspector(UIElement, x, y, width, height)
     end
 
     local btn = ISButton:new(x, y, width, height, "Inspector", nil, func);
-    btn.textColor = {r=0.3, g=0.3, b=0.7, a=1.0}
+    btn.textColor = {r=0.9, g=0.9, b=0.99, a=1.0}
     btn.backgroundColor = {r=0.0, g=0.0, b=0.1, a=1.0}
 
+    UIElement:addChild(btn);
+end
+
+function AUD.Buttons.addInspectorParamViewSetting(UIElement, x, y, width, height)
+    local func = function(target, self)
+        if AUD.Inspector.paramsMode == "NORMAL" then
+            AUD.Inspector.paramsMode = "TABLE_STATIC"
+            self:setTitle("Table static view")
+        elseif AUD.Inspector.paramsMode == "TABLE_STATIC" then
+            AUD.Inspector.paramsMode = "TABLE_DYNAMIC"
+            self:setTitle("Table dynamic view")
+        elseif AUD.Inspector.paramsMode == "TABLE_DYNAMIC" then
+            AUD.Inspector.paramsMode = "NORMAL"
+            self:setTitle("Normal view")
+        end
+        self:update()
+    end
+
+    local text = "UNDEF"
+    if AUD.Inspector.paramsMode == "NORMAL" then
+        text = "Normal view"
+    elseif AUD.Inspector.paramsMode == "TABLE_STATIC" then
+        text = "Table static view"
+    elseif AUD.Inspector.paramsMode == "TABLE_DYNAMIC" then
+        text = "Table dynamic view"
+    end
+
+    local btn = ISButton:new(x, y, width, height, text, nil, func);
+    UIElement:addChild(btn);
+end
+
+function AUD.Buttons.addInspectorClear(UIElement, x, y, width, height)
+    local func = function(target, self)
+        AUD.Inspector.TabsData = {}
+    end
+
+    local btn = ISButton:new(x, y, width, height, "Clear", nil, func);
+    UIElement:addChild(btn);
+end
+
+function AUD.Buttons.addLuaFileExplorer(UIElement, x, y, width, height)
+    local func = function(target, self)
+        local del = getCore():getScreenWidth() / 1920;
+        panel2 = CustomLuaFileBrowser:new(getCore():getScreenWidth()-(700*del), getCore():getScreenHeight() - (getCore():getScreenHeight()/3), (700*del), getCore():getScreenHeight()/3);
+        panel2:initialise();
+        panel2:addToUIManager();
+    end
+
+    local btn = ISButton:new(x, y, width, height, "Lua File Explorer", nil, func);
     UIElement:addChild(btn);
 end
 
