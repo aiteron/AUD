@@ -1,4 +1,4 @@
-require("AUDInit")
+require("AUD/Init")
 
 AUD.textureButtonOn = getTexture("media/textures/AUD_mainMenuButton_On.png")
 AUD.textureButtonOff = getTexture("media/textures/AUD_mainMenuButton_Off.png")

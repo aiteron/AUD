@@ -1,6 +1,6 @@
-require("AUDInit")
-require("AUDButtons")
-require("AUDUtils")
+require("AUD/Init")
+require("AUD/Buttons")
+require("AUD/Utils")
 
 AUDVehicleTab = ISPanelJoypad:derive("AUDVehicleTab")
 
@@ -24,10 +24,6 @@ function AUDVehicleTab:initialise()
     AUD.Buttons.addSelectVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*3, AUD.Buttons.Width, AUD.Buttons.Height)
     AUD.Buttons.addSelectThisVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*4, AUD.Buttons.Width, AUD.Buttons.Height)
     AUD.Buttons.addSpawnVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*5, AUD.Buttons.Width, AUD.Buttons.Height)
-end
-
-function AUDVehicleTab:render()
-
 end
 
 
@@ -81,10 +77,8 @@ end
 function AUD.Buttons.addSelectVehicle(UIElement, x, y, width, height)
     local func = function(target, self)
         if AUD.Utils.isSelectVehicle then
-            AUD.Utils.isHighlightSquareOn = false
             AUD.Utils.isSelectVehicle = false
         else
-            AUD.Utils.isHighlightSquareOn = true
             AUD.Utils.isSelectVehicle = true
         end
     end

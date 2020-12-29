@@ -1,5 +1,5 @@
 require "ISUI/ISCollapsableWindow"
-require("AUDInit")
+require("AUD/Init")
 AUD.FileBrowser = {}
 AUD.FileBrowser.FavFileList = {}
 
@@ -179,11 +179,24 @@ end
 -----------------
 
 function AUD.FileBrowser.ReadFavFileList()
-    return {}
+    local fileTable = {}
+	local readFile = getModFileReader("AUD", "DebugLuaFilesList.txt", true)
+	local scanLine = readFile:readLine()
+	while scanLine do
+		fileTable[#fileTable+1] = scanLine
+		scanLine = readFile:readLine()
+		if not scanLine then break end
+	end
+	readFile:close()
+	return fileTable
 end
 
 function AUD.FileBrowser.WriteFavFileList()
-    
+    local writeFile = getModFileWriter("AUD", "DebugLuaFilesList.txt", true, false)
+	for i = 1, #AUD.FileBrowser.FavFileList do
+		writeFile:write(AUD.FileBrowser.FavFileList[i].."\r\n");
+	end
+	writeFile:close()
 end
 
 

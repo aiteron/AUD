@@ -1,4 +1,4 @@
-require("AUDUtils")
+require("AUD/Utils")
 
 AUDSpawnVehiclePanel = ISPanel:derive("AUDSpawnVehiclePanel");
 

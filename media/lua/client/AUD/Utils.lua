@@ -1,4 +1,4 @@
-require("AUDInit")
+require("AUD/Init")
 AUD.Utils = {}
 
 AUD.Utils.isHighlightSquareOn = false
@@ -28,7 +28,7 @@ end
 
 Events.OnMouseMove.Add(AUD.Utils.highlightSquare)
 
-
+-----------------------------------------------------------
 
 
 function AUD.Utils.onClick()    
