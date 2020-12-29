@@ -88,9 +88,6 @@ function AUD.Buttons.addInspector(UIElement, x, y, width, height)
     end
 
     local btn = ISButton:new(x, y, width, height, "Inspector", nil, func);
-    btn.textColor = {r=0.9, g=0.9, b=0.99, a=1.0}
-    btn.backgroundColor = {r=0.0, g=0.0, b=0.1, a=1.0}
-
     UIElement:addChild(btn);
 end
 
@@ -133,8 +130,7 @@ end
 
 function AUD.Buttons.addLuaFileExplorer(UIElement, x, y, width, height)
     local func = function(target, self)
-        local del = getCore():getScreenWidth() / 1920;
-        panel2 = CustomLuaFileBrowser:new(getCore():getScreenWidth()-(700*del), getCore():getScreenHeight() - (getCore():getScreenHeight()/3), (700*del), getCore():getScreenHeight()/3);
+        panel2 = CustomLuaFileBrowser:new(getCore():getScreenWidth() - 550, getCore():getScreenHeight() - 300 - 300, 500, 300);
         panel2:initialise();
         panel2:addToUIManager();
     end

@@ -11,7 +11,7 @@ local activeViews = {
 
 
 function AUD.showMainWindow()
-    AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 220, Core:getInstance():getScreenHeight() - 290, 170, 248);
+    AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 220, Core:getInstance():getScreenHeight() - 290, 170, 238);
     AUD.mainWindowTabPanel:initialise();
     AUD.mainWindowTabPanel:setAnchorBottom(true);
     AUD.mainWindowTabPanel:setAnchorRight(true);
