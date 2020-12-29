@@ -8,9 +8,9 @@ local function showPlayerStats()
 
     local vehicle = player:getVehicle()
 
-    local x = "None"
-    local y = "None"
-    local vehName = "None"
+    local x = nil
+    local y = nil
+    local vehName = nil
 
     if vehicle then
         x = math.floor(vehicle:getX()*10)/10
@@ -19,7 +19,7 @@ local function showPlayerStats()
     end
 
     AUD.insp("Player", "Vehicle:", vehName)
-    AUD.insp("Player", "Vehicle position:", x, y, 4534, 3333, 2222)
+    AUD.insp("Player", "Vehicle position:", x, y)
 end
 
 
