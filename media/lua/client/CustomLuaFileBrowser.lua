@@ -97,13 +97,30 @@ function CustomLuaFileBrowser:onButtonReload()
     local item = self.fileList.items[self.buttonReloadRow]
     if not item then return end
 
-    table.insert(AUD.FileBrowser.FavFileList, item.item)
-    AUD.FileBrowser.WriteFavFileList()
+    if browserModeIsFav then
+        for i=1, #AUD.FileBrowser.FavFileList do
+            if AUD.FileBrowser.FavFileList[i] == item.item then
+                table.remove(AUD.FileBrowser.FavFileList, i)
+                break
+            end
+        end
+        AUD.FileBrowser.WriteFavFileList()
+    else
+        table.insert(AUD.FileBrowser.FavFileList, item.item)
+        AUD.FileBrowser.WriteFavFileList()
+        self:fill()
+    end
 end
 
 function CustomLuaFileBrowser:onButtonToggleList()
     browserModeIsFav = not browserModeIsFav
     self:fill()
+
+    if browserModeIsFav then
+        self.buttonReload:setTitle("Remove from Fav")
+    else
+        self.buttonReload:setTitle("Add to Fav")
+    end
 end
 
 function CustomLuaFileBrowser:createChildren()
@@ -135,7 +152,7 @@ function CustomLuaFileBrowser:createChildren()
 
     self:fill();
 
-    local button = ISButton:new(0, 0, 50, self.fileList.itemheight, "RELOAD", self, self.onButtonReload)
+    local button = ISButton:new(0, 0, 50, self.fileList.itemheight, "Remove from Fav", self, self.onButtonReload)
     button:initialise()
     self.fileList:addChild(button)
     self.fileList.doRepaintStencil = true
