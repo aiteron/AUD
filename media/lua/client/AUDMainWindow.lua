@@ -3,6 +3,12 @@ require("AUDInit")
 AUD.textureButtonOn = getTexture("media/textures/AUD_mainMenuButton_On.png")
 AUD.textureButtonOff = getTexture("media/textures/AUD_mainMenuButton_Off.png")
 
+local activeView = 1
+local activeViews = {
+        [1] = "Main",
+        [2] = "Vehicle",
+    }
+
 
 function AUD.showMainWindow()
     AUD.mainWindowTabPanel = ISTabPanel:new(Core:getInstance():getScreenWidth() - 680, Core:getInstance():getScreenHeight() - 285, 640, 248);
@@ -15,6 +21,7 @@ function AUD.showMainWindow()
     AUD.mainWindow = AUD.mainWindowTabPanel:wrapInCollapsableWindow("Aiteron Userfriendly Debug");
     
     local closeFunc = function(obj)
+        activeView = AUD.mainWindowTabPanel:getActiveViewIndex()
         ISCollapsableWindow.close(obj);
         AUD.toolbarButton:setImage(AUD.textureButtonOff);
     end
@@ -44,9 +51,10 @@ end
 
 function AUD.showMainWindowToggle()
     if AUD.mainWindow and AUD.mainWindow:getIsVisible() then
-		AUD.mainWindow:close();
+        AUD.mainWindow:close();
 	else
-		AUD.showMainWindow();
+        AUD.showMainWindow();
+        AUD.mainWindowTabPanel:activateView(activeViews[activeView])
 	end
 end
 
