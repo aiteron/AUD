@@ -81,3 +81,16 @@ function AUD.Buttons.addNoClip(UIElement, x, y, width, height)
     UIElement:addChild(btn);
 end
 
+function AUD.Buttons.addInspector(UIElement, x, y, width, height)
+    local func = function(target, self)
+        AUD.inspectorWindowTabPanel = AUDInspector:new(Core:getInstance():getScreenWidth() - 680, Core:getInstance():getScreenHeight() - 620, 640, 248);
+        AUD.inspectorWindowTabPanel:initialise()
+    end
+
+    local btn = ISButton:new(x, y, width, height, "Inspector", nil, func);
+    btn.textColor = {r=0.3, g=0.3, b=0.7, a=1.0}
+    btn.backgroundColor = {r=0.0, g=0.0, b=0.1, a=1.0}
+
+    UIElement:addChild(btn);
+end
+

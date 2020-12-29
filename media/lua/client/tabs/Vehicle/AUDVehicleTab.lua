@@ -20,9 +20,10 @@ function AUDVehicleTab:initialise()
 
     AUD.Buttons.addRepairVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent, AUD.Buttons.Width, AUD.Buttons.Height)
     AUD.Buttons.addGetVehicleKey(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep, AUD.Buttons.Width, AUD.Buttons.Height)
-    AUD.Buttons.addSelectVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*2, AUD.Buttons.Width, AUD.Buttons.Height)
-    AUD.Buttons.addSelectThisVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*3, AUD.Buttons.Width, AUD.Buttons.Height)
-    AUD.Buttons.addSpawnVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*4, AUD.Buttons.Width, AUD.Buttons.Height)
+    AUD.Buttons.addToggleHotwire(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*2, AUD.Buttons.Width, AUD.Buttons.Height)
+    AUD.Buttons.addSelectVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*3, AUD.Buttons.Width, AUD.Buttons.Height)
+    AUD.Buttons.addSelectThisVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*4, AUD.Buttons.Width, AUD.Buttons.Height)
+    AUD.Buttons.addSpawnVehicle(self, AUD.Buttons.LeftIndent, AUD.Buttons.TopIndent + AUD.Buttons.VerticalStep*5, AUD.Buttons.Width, AUD.Buttons.Height)
 end
 
 function AUDVehicleTab:render()
@@ -56,6 +57,24 @@ function AUD.Buttons.addGetVehicleKey(UIElement, x, y, width, height)
     end
 
     local btn = ISButton:new(x, y, width, height, "Get key", nil, func)
+    UIElement:addChild(btn);
+end
+
+
+function AUD.Buttons.addToggleHotwire(UIElement, x, y, width, height)
+    local func = function(target, self)
+        if AUD.Utils.selectedVehicle then
+            if AUD.Utils.selectedVehicle:isHotwired() then
+                AUD.Utils.selectedVehicle:setHotwired(false)
+            else
+                AUD.Utils.selectedVehicle:setHotwired(true)
+            end
+        else
+            getPlayer():Say("Vehicle not selected")
+        end
+    end
+
+    local btn = ISButton:new(x, y, width, height, "Toggle hotwire", nil, func)
     UIElement:addChild(btn);
 end
 
