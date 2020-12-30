@@ -1,2 +1,1 @@
-C:/Users/sasha/Zomboid/Workshop/BetterTowing/Contents/mods/Towing car/media/lua/client/TowingCar/PushVehicleByHands.lua
-C:/Users/sasha/Zomboid/Workshop/BetterTowing/Contents/mods/Towing car/media/lua/client/TowingCar/PushVehicleAction.lua
+C:/Users/sasha/Zomboid/Workshop/AUD/Contents/mods/AUD/media/lua/client/AUD/MainWindow.lua

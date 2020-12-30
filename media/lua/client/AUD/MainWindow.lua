@@ -24,7 +24,7 @@ function AUD.showMainWindow()
         activeView = AUD.mainWindowTabPanel:getActiveViewIndex()
         ISCollapsableWindow.close(obj);
         AUD.toolbarButton:setImage(AUD.textureButtonOff);
-        AUD.isMainWindowOpened = false
+        AUD.mainWindow:setRemoved(true)
     end
     
     AUD.mainWindow.close = closeFunc
@@ -110,31 +110,18 @@ end
 Events.OnCreatePlayer.Add(AUD.mainWindowButton)
 
 
+----- Custom Button
 
+ISCustomButton = ISButton:derive("ISCustomButton");
 
------------------------------
-
-local function saveWindowsState()
+function ISCustomButton:onRightMouseUp(x, y)
     local writeFile = getModFileWriter("AUD", "DebugWindowsState.txt", true, false)
-    
-    --isRemoved
 
-    if AUD.isMainWindowOpened then
+    if AUD.mainWindow and not AUD.mainWindow:isRemoved() then
         writeFile:write("TRUE".."\r\n");
     else
         writeFile:write("FALSE".."\r\n");
     end
     
 	writeFile:close()
-end
-
-Events.OnSave.Add(saveWindowsState)
-
-
------ Custom Button
-
-ISCustomButton = ISButton:derive("ISCustomButton");
-
-function ISCustomButton:onRightMouseUp(x, y)
-    print("YEAH")
 end
