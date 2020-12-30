@@ -20,6 +20,7 @@ function AUDInspector:initialise()
     
     local closeFunc = function(obj)
         ISCollapsableWindow.close(obj);
+        AUD.inspectorWindow:setRemoved(true)
     end
     
     AUD.inspectorWindow.close = closeFunc
@@ -46,6 +47,14 @@ end
 function AUD.insp(tabName, paramName, arg1, arg2, arg3, arg4, arg5, arg6)
     if AUD.Inspector.TabsData[tabName] == nil then
         AUD.Inspector.TabsData[tabName] = {}
+
+        if AUD.inspectorWindow then
+            AUD.paramTypeTab = AUDInspectorTab:new(0, 48, AUD.inspectorWindow:getWidth(), AUD.inspectorWindow:getHeight() - AUD.inspectorWindow.nested.tabHeight)
+            AUD.paramTypeTab:initialise()
+            AUDInspectorTab.values = AUD.Inspector.TabsData[tabName]
+            AUD.inspectorWindow.nested:addView(tabName, AUD.paramTypeTab)
+        end
+
     end
 
     local t = {}

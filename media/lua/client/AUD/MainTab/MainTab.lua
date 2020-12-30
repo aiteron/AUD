@@ -107,11 +107,22 @@ end
 
 function AUD.Buttons.addLuaFileExplorer(UIElement, x, y, width, height)
     local func = function(target, self)
-        panel2 = CustomLuaFileBrowser:new(getCore():getScreenWidth() - 550, getCore():getScreenHeight() - 300 - 300, 500, 300);
-        panel2:initialise();
-        panel2:addToUIManager();
+        AUD.luaFileBrowser = CustomLuaFileBrowser:new(getCore():getScreenWidth() - 550, getCore():getScreenHeight() - 300 - 300, 500, 300);
+        AUD.luaFileBrowser:initialise();
+        AUD.luaFileBrowser:addToUIManager();
     end
 
     local btn = ISButton:new(x, y, width, height, "Lua File Explorer", nil, func);
+    UIElement:addChild(btn);
+end
+
+
+function AUD.Buttons.addSaveLayout(UIElement, x, y, width, height)
+    local func = function(target, self)
+        AUD.inspectorWindowTabPanel = AUDInspector:new(Core:getInstance():getScreenWidth() - 680, Core:getInstance():getScreenHeight() - 620, 640, 248);
+        AUD.inspectorWindowTabPanel:initialise()
+    end
+
+    local btn = ISButton:new(x, y, width, height, "Save Win Layout", nil, func);
     UIElement:addChild(btn);
 end

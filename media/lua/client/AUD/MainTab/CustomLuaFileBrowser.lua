@@ -175,6 +175,11 @@ function CustomLuaFileBrowser:new(x, y, width, height)
     return o
 end
 
+function CustomLuaFileBrowser:close()
+    self:setRemoved(true)
+    ISCollapsableWindow.close(self);
+end
+
 
 -----------------
 

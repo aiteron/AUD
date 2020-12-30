@@ -62,33 +62,41 @@ function AUD.showMainWindowToggle()
 end
 
 local function restoreWindows()
-    local is_mainWindow = false
-
-	local readFile = getModFileReader("AUD", "DebugWindowsState.txt", true)
-    local scanLine = readFile:readLine()
+    local readFile = getModFileReader("AUD", "DebugWindowsState.txt", true)
     
-    if scanLine == "TRUE" then
-        is_mainWindow = true
-    end
-
-	while scanLine do
-		scanLine = readFile:readLine()
-		if not scanLine then break end
-	end
-	readFile:close()
-    
-
-
-    local mainWin_view = 2
-
-    if is_mainWindow then
+    if readFile:readLine() == "TRUE" then
         AUD.showMainWindow()
-        AUD.mainWindowTabPanel:activateView(activeViews[mainWin_view])
-        AUD.mainWindow:setX(100)
-        AUD.mainWindow:setY(100)
-        AUD.mainWindow:setWidth(300)
-        AUD.mainWindow:setHeight(500)
+
+        AUD.mainWindowTabPanel:activateView(activeViews[tonumber(readFile:readLine())])
+        AUD.mainWindow:setX(tonumber(readFile:readLine()))
+        AUD.mainWindow:setY(tonumber(readFile:readLine()))
+        AUD.mainWindow:setWidth(tonumber(readFile:readLine()))
+        AUD.mainWindow:setHeight(tonumber(readFile:readLine()))
     end
+
+    if readFile:readLine() == "TRUE" then
+        local x = tonumber(readFile:readLine())
+        local y = tonumber(readFile:readLine())
+        local width = tonumber(readFile:readLine())
+        local height = tonumber(readFile:readLine())
+        
+        AUD.inspectorWindowTabPanel = AUDInspector:new(x, y, width, height)
+        AUD.inspectorWindowTabPanel:initialise()
+    end
+
+    if readFile:readLine() == "TRUE" then
+        local x = tonumber(readFile:readLine())
+        local y = tonumber(readFile:readLine())
+        local width = tonumber(readFile:readLine())
+        local height = tonumber(readFile:readLine())
+        
+        AUD.luaFileBrowser = CustomLuaFileBrowser:new(x, y, width, height);
+        AUD.luaFileBrowser:initialise();
+        AUD.luaFileBrowser:addToUIManager();
+    end
+
+
+	readFile:close()
 end
 
 
@@ -119,9 +127,36 @@ function ISCustomButton:onRightMouseUp(x, y)
 
     if AUD.mainWindow and not AUD.mainWindow:isRemoved() then
         writeFile:write("TRUE".."\r\n");
+        writeFile:write(activeView .. "\r\n");
+        writeFile:write(AUD.mainWindow.x .. "\r\n");
+        writeFile:write(AUD.mainWindow.y .. "\r\n");
+        writeFile:write(AUD.mainWindow.width .. "\r\n");
+        writeFile:write(AUD.mainWindow.height .. "\r\n");
+    else
+        writeFile:write("FALSE".."\r\n");
+    end
+
+    if AUD.inspectorWindow and not AUD.inspectorWindow:isRemoved() then
+        writeFile:write("TRUE".."\r\n");
+        writeFile:write(AUD.inspectorWindow.x .. "\r\n");
+        writeFile:write(AUD.inspectorWindow.y .. "\r\n");
+        writeFile:write(AUD.inspectorWindow.width .. "\r\n");
+        writeFile:write(AUD.inspectorWindow.height .. "\r\n");
+    else
+        writeFile:write("FALSE".."\r\n");
+    end
+
+    if AUD.luaFileBrowser and not AUD.luaFileBrowser:isRemoved() then
+        writeFile:write("TRUE".."\r\n");
+        writeFile:write(AUD.luaFileBrowser.x .. "\r\n");
+        writeFile:write(AUD.luaFileBrowser.y .. "\r\n");
+        writeFile:write(AUD.luaFileBrowser.width .. "\r\n");
+        writeFile:write(AUD.luaFileBrowser.height .. "\r\n");
     else
         writeFile:write("FALSE".."\r\n");
     end
     
-	writeFile:close()
+    writeFile:close()
+    
+    getPlayer():Say("Window layout saved")
 end
